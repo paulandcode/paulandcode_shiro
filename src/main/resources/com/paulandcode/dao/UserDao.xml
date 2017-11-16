@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.paulandcode.dao.UserDao">
+	<sql id="UserColumns">
+		id,
+		organization_id,
+		username,
+		password,
+		salt,
+		role_ids,
+		locked,
+		available
+	</sql>
+	
+	<insert id="insert" parameterType="com.paulandcode.entity.UserEntity">
+		INSERT INTO sys_user (
+			organization_id,
+			username,
+			password,
+			salt,
+			role_ids,
+			locked,
+			available
+		) VALUES (
+			#{organizationId},
+			#{username},
+			#{password},
+			#{salt},
+			#{roleIds},
+			#{locked},
+			#{available}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.paulandcode.entity.UserEntity">
+		UPDATE sys_user
+		<set>
+			<if test="organizationId != null">organization_id = #{organizationId},</if>
+			<if test="username != null">username = #{username},</if>
+			<if test="password != null">password = #{password},</if>
+			<if test="salt != null">salt = #{salt},</if>
+			<if test="roleIds != null">role_ids = #{roleIds},</if>
+			<if test="locked != null">locked = #{locked},</if>
+			<if test="available != null">available = #{available},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="Long">
+		UPDATE sys_user
+		SET available = 0
+		WHERE id = #{id}
+	</update>
+	
+	<select id="queryObject" parameterType="Long" resultType="com.paulandcode.entity.UserEntity">
+		SELECT <include refid="UserColumns"/>
+		FROM sys_user
+		WHERE id = #{id}
+	</select>
+	
+	<select id="queryList" resultType="com.paulandcode.entity.UserEntity">
+		SELECT <include refid="UserColumns"/>
+		FROM sys_user
+		WHERE available = 1
+	</select>
+	
+	<select id="queryByUsername" parameterType="String" resultType="com.paulandcode.entity.UserEntity">
+		SELECT <include refid="UserColumns"/>
+		FROM sys_user
+		WHERE username = #{username}
+	</select>
+</mapper>
