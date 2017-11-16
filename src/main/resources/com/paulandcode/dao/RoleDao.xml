@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.paulandcode.dao.RoleDao">
+	<sql id="RoleColumns">
+		id,
+		role,
+		description,
+		resource_ids,
+		available
+	</sql>
+	
+	<insert id="insert" parameterType="com.paulandcode.entity.RoleEntity">
+		INSERT INTO sys_role (
+			role,
+			description,
+			resource_ids,
+			available
+		) VALUES (
+			#{role},
+			#{description},
+			#{resourceIds},
+			#{available}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.paulandcode.entity.RoleEntity">
+		UPDATE sys_role
+		<set>
+			<if test="role != null">role = #{role},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="resourceIds != null">resource_ids = #{resourceIds},</if>
+			<if test="available != null">available = #{available},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="Long">
+		UPDATE sys_role
+		SET available = 0
+		WHERE id = #{id}
+	</update>
+	
+	<select id="queryObject" parameterType="Long" resultType="com.paulandcode.entity.RoleEntity">
+		SELECT <include refid="RoleColumns"/>
+		FROM sys_role
+		WHERE id = #{id}
+	</select>
+	
+	<select id="queryList" resultType="com.paulandcode.entity.RoleEntity">
+		SELECT <include refid="RoleColumns"/>
+		FROM sys_role
+		WHERE available = 1
+	</select>
+</mapper>

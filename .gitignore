@@ -1,0 +1,38 @@
+/.settings/
+/target/
+
+# Java class files
+*.class
+
+# Eclipse project files
+.classpath
+.project
+.DS_Store
+
+# generated files
+bin/
+gen/
+
+# package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# mobile tools for Java (J2ME)
+.mtj.tmp/

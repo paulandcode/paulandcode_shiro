@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.paulandcode.dao.OrganizationDao">
+	<sql id="OrganizationColumns">
+		id,
+		name,
+		parent_id,
+		parent_ids,
+		available
+	</sql>
+	
+	<insert id="insert" parameterType="com.paulandcode.entity.OrganizationEntity">
+		INSERT INTO sys_organization (
+			name,
+			parent_id,
+			parent_ids,
+			available
+		) VALUES (
+			#{name},  
+			#{parentId}, 
+			#{parentIds},
+			#{available}
+		)
+	</insert>
+	
+	<update id="updateSelf" parameterType="com.paulandcode.entity.OrganizationEntity">
+		UPDATE sys_organization
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="parentId != null">parent_id = #{parentId},</if>
+			<if test="parentIds != null">parent_ids = #{parentIds},</if>
+			<if test="available != null">available = #{available},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateChildren" parameterType="map">
+		UPDATE sys_organization
+		SET parent_ids = CONCAT(#{newParentIds}, substring(parent_ids, length(#{oldParentIds})))
+		WHERE parent_ids LIKE CONCAT(#{oldParentIds},'%')
+	</update>
+	
+	<update id="delete" parameterType="Long">
+		UPDATE sys_organization
+		SET available = 0
+		WHERE id = #{id}
+			OR parent_ids LIKE CONCAT('%/', #{id}, '/%')
+	</update>
+	
+	<select id="queryObject" parameterType="Long" resultType="com.paulandcode.entity.OrganizationEntity">
+		SELECT <include refid="OrganizationColumns"/>
+		FROM sys_organization
+		WHERE id = #{id}
+	</select>
+	
+	<select id="queryList" resultType="com.paulandcode.entity.OrganizationEntity">
+		SELECT <include refid="OrganizationColumns"/>
+		FROM sys_organization
+		WHERE available = 1 
+	</select> 
+	
+	<select id="queryByExcludeId" resultType="com.paulandcode.entity.OrganizationEntity">
+		SELECT <include refid="OrganizationColumns"/>
+		FROM sys_organization
+		WHERE available = 1
+			AND id != #{id} 
+			AND parent_ids NOT LIKE CONCAT('%/', #{id}, '/%')
+	</select>
+	
+	<update id="moveSelf" parameterType="map">
+		UPDATE sys_organization
+		SET parent_id = #{parentId},
+			parent_ids = #{parentIds}
+		WHERE id = #{id} 
+	</update>
+	
+	<update id="moveChildren" parameterType="map">
+		UPDATE sys_organization
+		SET parent_ids = CONCAT(#{subResultParentIds}, substring(parent_ids, length(#{sourceSelfAsParentIds}) + 1))
+		WHERE parent_ids LIKE CONCAT(#{sourceSelfAsParentIds},'%')
+	</update>	
+</mapper>
