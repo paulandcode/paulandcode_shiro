@@ -38,7 +38,7 @@
 <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
 	<ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
 </div>
-<script src="${jsPath}/jquery-1.11.0.min.js"></script>
+<script src="${jsPath}/jquery-2.2.4.min.js"></script>
 <script src="${jsPath}/JQuery zTree v3.5.15/js/jquery.ztree.all-3.5.min.js"></script>
 <script>
 	$(function () {

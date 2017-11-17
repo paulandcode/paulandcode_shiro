@@ -6,9 +6,9 @@
 
 <configuration>
 	<settings>
-        <!-- 改配置可以实现将下划线自动转换为驼峰 -->
+        <!-- 该配置可以实现将下划线自动转换为驼峰 -->
         <!-- 比如以前要这么写: -->
-        <!--        SELECT file_id as fileId,
+        <!--	SELECT file_id as fileId,
                        dir_id as dirId
                 FROM sys_directory_file -->
 		<!-- 现在可以这么写: -->

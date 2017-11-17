@@ -12,7 +12,7 @@
 <iframe name="tree" class="ui-layout-west"
         src="${basePath}/organization/tree" frameborder="0" scrolling="auto"></iframe>
 
-<script src="${jsPath}/jquery-1.11.0.min.js"></script>
+<script src="${jsPath}/jquery-2.2.4.min.js"></script>
 <script src="${jsPath}/jquery.layout-latest.min.js"></script>
 <script>
     $(function () {

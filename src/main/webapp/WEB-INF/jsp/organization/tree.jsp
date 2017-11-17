@@ -8,7 +8,7 @@
 
 <ul id="tree" class="ztree"></ul>
 
-<script src="${jsPath}/jquery-1.11.0.min.js"></script>
+<script src="${jsPath}/jquery-2.2.4.min.js"></script>
 <script src="${jsPath}/JQuery zTree v3.5.15/js/jquery.ztree.all-3.5.min.js"></script>
 <script>
 	var setting = {

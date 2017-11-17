@@ -38,7 +38,7 @@
         </shiro:hasPermission>
     </form:form>
 
-    <script src="${jsPath}/jquery-1.11.0.min.js"></script>
+    <script src="${jsPath}/jquery-2.2.4.min.js"></script>
     <script>
         $(function() {
             $("#updateBtn").click(function() {
