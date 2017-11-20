@@ -19,7 +19,7 @@ import com.paulandcode.service.OrganizationService;
  * @date 2017年10月18日 上午11:04:01
  */
 @Controller
-@RequestMapping("/organization")
+@RequestMapping("organization")
 public class OrganizationController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class OrganizationController {
 
 	// value为权限值,logical有AND和OR,默认为AND
 	@RequiresPermissions(value = { "organization:view", "test" }, logical = Logical.OR)
-	@RequestMapping(value = "/tree", method = RequestMethod.GET)
+	@RequestMapping(value = "tree", method = RequestMethod.GET)
 	public String showTree(Model model) {
 		model.addAttribute("organizationList", organizationService.queryList());
 		return "organization/tree";
@@ -41,7 +41,7 @@ public class OrganizationController {
 
 	@RequiresPermissions("organization:create")
 	// 使用@PathVariable注解,可以直接获取url中的内容
-	@RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.GET)
+	@RequestMapping(value = "{parentId}/appendChild", method = RequestMethod.GET)
 	public String showAppendChildForm(@PathVariable("parentId") Long parentId, Model model) {
 		OrganizationEntity parent = organizationService.queryObject(parentId);
 		model.addAttribute("parent", parent);
@@ -54,7 +54,7 @@ public class OrganizationController {
 	}
 
 	@RequiresPermissions("organization:create")
-	@RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.POST)
+	@RequestMapping(value = "{parentId}/appendChild", method = RequestMethod.POST)
 	public String create(OrganizationEntity organization) {
 		organizationService.insert(organization);
 		return "redirect:/organization/success";
@@ -63,7 +63,7 @@ public class OrganizationController {
 	@RequiresPermissions("organization:update")
 	// 此请求为GET方式,用于数据回显(例:当前端为POST请求,而后端只有GET对应的方法时,出现错误码:405 – Method Not
 	// Allowed)
-	@RequestMapping(value = "/{id}/maintain", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}/maintain", method = RequestMethod.GET)
 	public String showMaintainForm(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("organization", organizationService.queryObject(id));
 		return "organization/maintain";
@@ -71,7 +71,7 @@ public class OrganizationController {
 
 	@RequiresPermissions("organization:update")
 	// 此请求为POST方式,用于更新数据库
-	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}/update", method = RequestMethod.POST)
 	public String update(OrganizationEntity organization, RedirectAttributes redirectAttributes) {
 		organizationService.update(organization);
 		redirectAttributes.addFlashAttribute("msg", "修改成功");
@@ -79,7 +79,7 @@ public class OrganizationController {
 	}
 
 	@RequiresPermissions("organization:delete")
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
 	// 若是重定向,则不能用model.addAttribute()方法,而是要用redirectAttributes.addFlashAttribute()方法
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		organizationService.delete(id);
@@ -88,7 +88,7 @@ public class OrganizationController {
 	}
 
 	@RequiresPermissions("organization:update")
-	@RequestMapping(value = "/{sourceId}/move", method = RequestMethod.GET)
+	@RequestMapping(value = "{sourceId}/move", method = RequestMethod.GET)
 	public String showMoveForm(@PathVariable("sourceId") Long sourceId, Model model) {
 		OrganizationEntity source = organizationService.queryObject(sourceId);
 		model.addAttribute("source", source);
@@ -97,7 +97,7 @@ public class OrganizationController {
 	}
 
 	@RequiresPermissions("organization:update")
-	@RequestMapping(value = "/{sourceId}/move", method = RequestMethod.POST)
+	@RequestMapping(value = "{sourceId}/move", method = RequestMethod.POST)
 	public String move(@PathVariable("sourceId") Long sourceId, @RequestParam("targetId") Long targetId,
 			RedirectAttributes redirectAttributes) {
 		OrganizationEntity source = organizationService.queryObject(sourceId);
@@ -108,7 +108,7 @@ public class OrganizationController {
 	}
 
 	@RequiresPermissions("organization:view")
-	@RequestMapping(value = "/success", method = RequestMethod.GET)
+	@RequestMapping(value = "success", method = RequestMethod.GET)
 	public String success() {
 		return "organization/success";
 	}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UnauthorizedController {
 
-	@RequestMapping("/unauthorized")
+	@RequestMapping("unauthorized")
 	public String unauthorized() {
 		return "common/unauthorized";
 	}

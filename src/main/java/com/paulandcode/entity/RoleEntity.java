@@ -18,15 +18,15 @@ public class RoleEntity implements Serializable {
 	 */
 	private Long id;
 	/**
-	 * 角色标识 程序中判断使用,如"admin"
+	 * 角色名称
 	 */
 	private String role;
 	/**
-	 * 角色描述,UI界面显示使用
+	 * 角色描述
 	 */
 	private String description;
 	/**
-	 * 拥有的资源
+	 * 拥有的资源,如11,21,31,41
 	 */
 	private String resourceIds;
 	/**

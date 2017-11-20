@@ -30,17 +30,17 @@ public class ResourceEntity implements Serializable {
 	 */
 	private String url;
 	/**
-	 * 权限字符串
-	 */
-	private String permission;
-	/**
 	 * 父编号
 	 */
 	private Long parentId;
 	/**
-	 * 父编号列表
+	 * 父编号列表，如1/2/
 	 */
 	private String parentIds;
+	/**
+	 * 权限字符串
+	 */
+	private String permission;
 	/**
 	 * 是否可用 0:不可用 1:可用 默认1
 	 */

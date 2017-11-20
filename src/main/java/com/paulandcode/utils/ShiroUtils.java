@@ -1,8 +1,12 @@
 package com.paulandcode.utils;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.subject.WebSubject;
 
 import com.paulandcode.entity.UserEntity;
 
@@ -50,6 +54,14 @@ public class ShiroUtils {
 		String kaptcha = getSessionAttribute(key).toString();
 		getSession().removeAttribute(key);
 		return kaptcha;
+	}
+	
+	public static ServletRequest getServletRequest() {
+		return ((WebSubject)getSubject()).getServletRequest();
+	}
+	
+	public static ServletResponse getServletResponse() {
+		return ((WebSubject)getSubject()).getServletResponse();
 	}
 
 }

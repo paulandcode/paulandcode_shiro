@@ -34,7 +34,7 @@ public class UserEntity implements Serializable {
 	 */
 	private String salt;
 	/**
-	 * 拥有的角色列表
+	 * 拥有的角色列表,如5,7
 	 */
 	private String roleIds;
 	/**

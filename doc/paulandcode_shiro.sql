@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50162
 File Encoding         : 65001
 
-Date: 2017-11-17 11:28:39
+Date: 2017-11-20 10:34:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `sys_resource` (
   `type` varchar(50) DEFAULT NULL COMMENT '资源类型',
   `url` varchar(200) DEFAULT NULL COMMENT '资源路径',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父编号',
-  `parent_ids` varchar(100) DEFAULT NULL COMMENT '父编号列表',
+  `parent_ids` varchar(100) DEFAULT NULL COMMENT '父编号列表，如1/2/',
   `permission` varchar(100) DEFAULT NULL COMMENT '权限字符串',
   `available` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否可用 0:不可用 1:可用 默认1',
   PRIMARY KEY (`id`),
@@ -95,9 +95,9 @@ INSERT INTO `sys_resource` VALUES ('45', '角色查看', 'button', '', '41', '0/
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增长主键',
-  `role` varchar(100) DEFAULT NULL COMMENT '角色标识 程序中判断使用,如"admin"',
-  `description` varchar(100) DEFAULT NULL COMMENT '角色描述,UI界面显示使用',
-  `resource_ids` varchar(100) DEFAULT NULL COMMENT '拥有的资源',
+  `role` varchar(100) DEFAULT NULL COMMENT '角色名称',
+  `description` varchar(100) DEFAULT NULL COMMENT '角色描述',
+  `resource_ids` varchar(100) DEFAULT NULL COMMENT '拥有的资源,如11,21,31,41',
   `available` tinyint(1) DEFAULT '1' COMMENT '是否可用 0:不可用 1:可用 默认1',
   PRIMARY KEY (`id`),
   KEY `idx_sys_role_resource_ids` (`resource_ids`)
@@ -122,8 +122,8 @@ CREATE TABLE `sys_user` (
   `organization_id` bigint(20) DEFAULT NULL COMMENT '机构ID',
   `username` varchar(100) DEFAULT NULL COMMENT '用户名',
   `password` varchar(100) DEFAULT NULL COMMENT '密码',
-  `salt` varchar(100) DEFAULT NULL COMMENT '加密密码的盐',
-  `role_ids` varchar(100) DEFAULT NULL COMMENT '拥有的角色列表',
+  `salt` varchar(50) DEFAULT NULL COMMENT '加密密码的盐',
+  `role_ids` varchar(100) DEFAULT NULL COMMENT '拥有的角色列表,如5,7',
   `locked` tinyint(1) DEFAULT '0' COMMENT '账号是否锁定 0:未锁定 1:已锁定 默认0',
   `available` tinyint(1) DEFAULT '1' COMMENT '是否可用 0:不可用 1:可用 默认1',
   PRIMARY KEY (`id`),

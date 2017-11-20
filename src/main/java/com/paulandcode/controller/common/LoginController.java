@@ -1,13 +1,25 @@
 package com.paulandcode.controller.common;
 
-import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-import org.apache.shiro.authc.IncorrectCredentialsException;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.authc.CredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
+import com.paulandcode.utils.CaptchaException;
 import com.paulandcode.utils.ShiroUtils;
 
 /**
@@ -17,23 +29,46 @@ import com.paulandcode.utils.ShiroUtils;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = "/login")
+	@Autowired
+	private Producer producer;
+
+	@RequestMapping("login")
 	public String showLoginForm(HttpServletRequest req, Model model) {
 		String exceptionClassName = (String) req.getAttribute("shiroLoginFailure");
 		// 若已经登陆成功则重定向到主页面
-		if(ShiroUtils.isLogin()) {
+		if (ShiroUtils.isLogin()) {
 			return "redirect:/";
 		}
 		String error = null;
-		if (UnknownAccountException.class.getName().equals(exceptionClassName)) {
+		if (CaptchaException.class.getName().equals(exceptionClassName)) {
+			error = "验证码错误";
+		} else if (UnknownAccountException.class.getName().equals(exceptionClassName)) {
 			error = "用户不存在";
-		} else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
+		} else if (LockedAccountException.class.getName().equals(exceptionClassName)) {
+			error = "帐号被锁定";
+		} else if (CredentialsException.class.getName().equals(exceptionClassName)) {
 			error = "密码错误";
 		} else if (exceptionClassName != null) {
 			error = "其他错误：" + exceptionClassName;
 		}
 		model.addAttribute("error", error);
 		return "common/login";
+	}
+
+	@RequestMapping("getCaptcha")
+	public void getCaptcha(HttpServletResponse response) throws ServletException, IOException {
+		response.setHeader("Cache-Control", "no-store, no-cache");
+		response.setContentType("image/jpeg");
+
+		// 生成文字验证码
+		String text = producer.createText();
+		// 生成图片验证码
+		BufferedImage image = producer.createImage(text);
+		// 保存到shiro session
+		ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
+
+		ServletOutputStream out = response.getOutputStream();
+		ImageIO.write(image, "jpg", out);
 	}
 
 }

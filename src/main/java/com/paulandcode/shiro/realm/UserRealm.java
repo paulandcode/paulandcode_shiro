@@ -13,8 +13,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.code.kaptcha.Constants;
 import com.paulandcode.entity.UserEntity;
 import com.paulandcode.service.UserService;
+import com.paulandcode.utils.CaptchaException;
+import com.paulandcode.utils.ShiroUtils;
 
 /**
  * @author 黄建峰
@@ -31,7 +34,6 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String username = ((UserEntity) principals.getPrimaryPrincipal()).getUsername();
-
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(userService.getRoles(username));
 		authorizationInfo.setStringPermissions(userService.getPermissions(username));
@@ -44,7 +46,6 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
 		String username = ((UserEntity) principals.getPrimaryPrincipal()).getUsername();
-
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(userService.getRoles(username));
 		authorizationInfo.setStringPermissions(userService.getPermissions(username));
@@ -56,18 +57,22 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
-		String username = (String) token.getPrincipal();
-
-		UserEntity user = userService.queryByUsername(username);
-
-		if (user == null) {
-			// 没找到帐号
-			throw new UnknownAccountException();
+		// 系统生成的验证码
+		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+		// 用户填写的验证码
+		String captcha = ShiroUtils.getServletRequest().getParameter("captcha");
+		if(!captcha.equalsIgnoreCase(kaptcha)){
+			// 验证码错误
+			throw new CaptchaException();
 		}
 
+		UserEntity user = userService.queryByUsername((String)token.getPrincipal());
+		if (user == null) {
+			// 帐号不存在
+			throw new UnknownAccountException();
+		}
 		if (Boolean.TRUE.equals(user.getLocked())) {
-			// 帐号锁定
+			// 帐号被锁定
 			throw new LockedAccountException();
 		}
 
@@ -75,6 +80,7 @@ public class UserRealm extends AuthorizingRealm {
 		// 用户名，密码，salt=username+salt，realm name
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,
 				user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
+		
 		return authenticationInfo;
 	}
 

@@ -173,6 +173,7 @@
             <value>
             	/login= authc
                 /logout = logout
+                /getCaptcha = anon
                 /static/image/sunup.jpg = perms["abs"]
                 /** = user,sysUser
             </value>

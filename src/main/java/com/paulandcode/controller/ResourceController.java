@@ -18,7 +18,7 @@ import com.paulandcode.service.ResourceService;
  * @date 2017年10月18日 上午11:04:20
  */
 @Controller
-@RequestMapping("/resource")
+@RequestMapping("resource")
 public class ResourceController {
 
 	@Autowired
@@ -46,7 +46,7 @@ public class ResourceController {
 	}
 
 	@RequiresPermissions("resource:create")
-	@RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.GET)
+	@RequestMapping(value = "{parentId}/appendChild", method = RequestMethod.GET)
 	public String showAppendChildForm(@PathVariable("parentId") Long parentId, Model model) {
 		ResourceEntity parent = resourceService.queryObject(parentId);
 		model.addAttribute("parent", parent);
@@ -59,7 +59,7 @@ public class ResourceController {
 	}
 
 	@RequiresPermissions("resource:create")
-	@RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.POST)
+	@RequestMapping(value = "{parentId}/appendChild", method = RequestMethod.POST)
 	public String create(ResourceEntity resource, RedirectAttributes redirectAttributes) {
 		resourceService.insert(resource);
 		redirectAttributes.addFlashAttribute("msg", "新增子节点成功");
@@ -67,7 +67,7 @@ public class ResourceController {
 	}
 
 	@RequiresPermissions("resource:update")
-	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("resource", resourceService.queryObject(id));
 		model.addAttribute("op", "修改");
@@ -75,7 +75,7 @@ public class ResourceController {
 	}
 
 	@RequiresPermissions("resource:update")
-	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}/update", method = RequestMethod.POST)
 	public String update(ResourceEntity resource, RedirectAttributes redirectAttributes) {
 		resourceService.update(resource);
 		redirectAttributes.addFlashAttribute("msg", "修改成功");
@@ -83,7 +83,7 @@ public class ResourceController {
 	}
 
 	@RequiresPermissions("resource:delete")
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		resourceService.delete(id);
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
