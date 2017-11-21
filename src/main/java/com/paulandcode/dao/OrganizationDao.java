@@ -6,6 +6,8 @@ import com.paulandcode.entity.OrganizationEntity;
 import com.paulandcode.utils.Query;
 
 /**
+ * 机构
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:40:17
  */

@@ -6,6 +6,8 @@ import java.util.Set;
 import com.paulandcode.entity.RoleEntity;
 
 /**
+ * 角色
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:38:53
  */

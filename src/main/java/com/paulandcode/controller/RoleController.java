@@ -18,6 +18,8 @@ import com.paulandcode.service.ResourceService;
 import com.paulandcode.service.RoleService;
 
 /**
+ * 角色
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午11:04:37
  */
@@ -30,7 +32,7 @@ public class RoleController {
 
 	@Autowired
 	private ResourceService resourceService;
-	
+
 	@ModelAttribute("resourceList")
 	public List<ResourceEntity> resourceList() {
 		return resourceService.queryList();
@@ -42,7 +44,7 @@ public class RoleController {
 		model.addAttribute("roleList", roleService.queryList());
 		return "role/list";
 	}
-	
+
 	@RequiresPermissions("role:create")
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String showCreateForm(Model model) {

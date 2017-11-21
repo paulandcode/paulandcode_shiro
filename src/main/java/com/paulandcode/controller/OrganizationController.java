@@ -15,6 +15,8 @@ import com.paulandcode.entity.OrganizationEntity;
 import com.paulandcode.service.OrganizationService;
 
 /**
+ * 机构
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午11:04:01
  */
@@ -80,9 +82,9 @@ public class OrganizationController {
 
 	@RequiresPermissions("organization:delete")
 	@RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
-	// 若是重定向,则不能用model.addAttribute()方法,而是要用redirectAttributes.addFlashAttribute()方法
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		organizationService.delete(id);
+		// 若是重定向,则不能用model.addAttribute()方法,而是要用redirectAttributes.addFlashAttribute()方法
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
 		return "redirect:/organization/success";
 	}

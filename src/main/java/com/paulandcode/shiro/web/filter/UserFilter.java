@@ -1,4 +1,4 @@
-package com.paulandcode.shiro.filter;
+package com.paulandcode.shiro.web.filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

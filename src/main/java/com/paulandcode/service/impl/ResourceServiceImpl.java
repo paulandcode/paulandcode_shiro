@@ -16,6 +16,8 @@ import com.paulandcode.service.ResourceService;
 import com.paulandcode.utils.Query;
 
 /**
+ * 资源
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:44:59
  */
@@ -34,7 +36,7 @@ public class ResourceServiceImpl implements ResourceService {
 	public void update(ResourceEntity resource) {
 		String oldParentIds = resourceDao.queryObject(resource.getId()).getParentIds();
 		resourceDao.updateSelf(resource);
-		if(null != resource.getParentIds()) {
+		if (null != resource.getParentIds()) {
 			Query query = new Query();
 			query.put("oldParentIds", oldParentIds);
 			query.put("newParentIds", resource.getParentIds());

@@ -6,6 +6,7 @@ import java.util.Properties;
 
 /**
  * properties载入工具类
+ * 
  * @author 黄建峰
  * @date 2017年9月19日 下午3:27:12
  */
@@ -28,7 +29,8 @@ public class PropertiesLoader {
 		for (String location : resourcePaths) {
 			InputStreamReader is = null;
 			try {
-				is = new InputStreamReader(PropertiesLoader.class.getClassLoader().getResourceAsStream(location), "UTF-8");
+				is = new InputStreamReader(PropertiesLoader.class.getClassLoader().getResourceAsStream(location),
+						"UTF-8");
 				props.load(is);
 			} catch (Exception e) {
 
@@ -54,5 +56,5 @@ public class PropertiesLoader {
 		}
 		return "";
 	}
-	
+
 }

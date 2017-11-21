@@ -9,7 +9,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.authc.CredentialsException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.paulandcode.utils.CaptchaException;
+import com.paulandcode.shiro.authc.CaptchaException;
 import com.paulandcode.utils.ShiroUtils;
 
 /**
+ * 登录
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午11:03:44
  */
@@ -46,8 +49,10 @@ public class LoginController {
 			error = "用户不存在";
 		} else if (LockedAccountException.class.getName().equals(exceptionClassName)) {
 			error = "帐号被锁定";
-		} else if (CredentialsException.class.getName().equals(exceptionClassName)) {
-			error = "密码错误";
+		} else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
+			error = "密码不正确";
+		} else if (ExcessiveAttemptsException.class.getName().equals(exceptionClassName)) {
+			error = "登录次数过多,请稍后再试";
 		} else if (exceptionClassName != null) {
 			error = "其他错误：" + exceptionClassName;
 		}

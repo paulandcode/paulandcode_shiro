@@ -5,6 +5,8 @@ import java.util.List;
 import com.paulandcode.entity.OrganizationEntity;
 
 /**
+ * 机构
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:38:25
  */

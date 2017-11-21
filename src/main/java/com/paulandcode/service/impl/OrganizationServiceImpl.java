@@ -11,6 +11,8 @@ import com.paulandcode.service.OrganizationService;
 import com.paulandcode.utils.Query;
 
 /**
+ * 机构
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:44:41
  */
@@ -28,7 +30,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public void update(OrganizationEntity organization) {
 		String oldParentIds = organizationDao.queryObject(organization.getId()).getParentIds();
 		organizationDao.updateSelf(organization);
-		if(null != organization.getParentIds()) {
+		if (null != organization.getParentIds()) {
 			Query query = new Query();
 			query.put("oldParentIds", oldParentIds);
 			query.put("newParentIds", organization.getParentIds());
@@ -63,10 +65,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		moveSelfQuery.put("parentId", target.getId());
 		moveSelfQuery.put("parentIds", target.makeSelfAsParentIds());
 		organizationDao.moveSelf(moveSelfQuery);
-		
+
 		Query moveOthersQuery = new Query();
 		moveOthersQuery.put("subResultParentIds", target.makeSelfAsParentIds() + source.getId() + "/");
-		moveOthersQuery.put("sourceSelfAsParentIds", source.makeSelfAsParentIds().substring(0,source.makeSelfAsParentIds().length()));
+		moveOthersQuery.put("sourceSelfAsParentIds",
+				source.makeSelfAsParentIds().substring(0, source.makeSelfAsParentIds().length()));
 		organizationDao.moveChildren(moveOthersQuery);
 	}
 }

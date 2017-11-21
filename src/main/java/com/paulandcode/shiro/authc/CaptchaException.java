@@ -1,4 +1,4 @@
-package com.paulandcode.utils;
+package com.paulandcode.shiro.authc;
 
 import org.apache.shiro.authc.AuthenticationException;
 

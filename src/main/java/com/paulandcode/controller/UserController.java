@@ -16,6 +16,8 @@ import com.paulandcode.service.RoleService;
 import com.paulandcode.service.UserService;
 
 /**
+ * 用户
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午11:04:54
  */
@@ -30,7 +32,7 @@ public class UserController {
 	private OrganizationService organizationService;
 	@Autowired
 	private RoleService roleService;
-	
+
 	@ModelAttribute
 	public void resourceList(Model model) {
 		model.addAttribute("organizationList", organizationService.queryList());

@@ -5,6 +5,8 @@ import java.util.List;
 import com.paulandcode.entity.UserEntity;
 
 /**
+ * 用户
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:41:34
  */

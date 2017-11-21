@@ -16,6 +16,8 @@ import com.paulandcode.service.UserService;
 import com.paulandcode.utils.PasswordHelper;
 
 /**
+ * 用户
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:46:08
  */
@@ -100,7 +102,7 @@ public class UserServiceImpl implements UserService {
 		}
 		String[] roleIdStrings = user.getRoleIds().split(",");
 		Long[] roleIds = new Long[roleIdStrings.length];
-		for(int i = 0; i < roleIdStrings.length; i++) {
+		for (int i = 0; i < roleIdStrings.length; i++) {
 			roleIds[i] = Long.valueOf(roleIdStrings[i]);
 		}
 		return roleService.getRoles(roleIds);
@@ -118,13 +120,13 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Collections.emptySet();
 		}
-		String roleIdStrings =  user.getRoleIds();
-		if(StringUtils.isBlank(roleIdStrings)) {
+		String roleIdStrings = user.getRoleIds();
+		if (StringUtils.isBlank(roleIdStrings)) {
 			return new HashSet<String>();
 		}
 		String[] roleIdStringss = roleIdStrings.split(",");
 		Long[] roleIds = new Long[roleIdStringss.length];
-		for(int i = 0; i < roleIdStringss.length; i++) {
+		for (int i = 0; i < roleIdStringss.length; i++) {
 			roleIds[i] = Long.valueOf(roleIdStringss[i]);
 		}
 		return roleService.getPermissions(roleIds);

@@ -19,7 +19,7 @@ import com.paulandcode.service.RoleService;
  * @author 黄建峰
  * @date 2017年10月18日 上午11:29:46
  */
-public class Taglib {
+public class TaglibUtils {
 
 	private static OrganizationService organizationService;
 	private static RoleService roleService;

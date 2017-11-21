@@ -10,7 +10,9 @@
 
 	<!--================================================== 自定义Realm begin ==================================================-->
     <!-- 凭证匹配器，这些设置要和加密时的设置一样 -->
-    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    <bean id="credentialsMatcher" class="com.paulandcode.shiro.authc.credential.RetryLimitCredentialsMatcher">
+        <!-- 使用带有缓存参数的构造器 -->
+        <constructor-arg ref="cacheManager"/>
         <!-- 散列算法 -->
         <property name="hashAlgorithmName" value="md5"/>
         <!-- 散列迭代次数 -->
@@ -33,8 +35,9 @@
     </bean>
     <!--================================================== 自定义Realm end ==================================================-->
 
-	<!--================================================== 缓存管理器 使用Ehcache实现 ==================================================-->
+	<!--================================================== 缓存管理器 使用EhCache实现 ==================================================-->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    	<property name="cacheManagerConfigFile" value="classpath:config/ehcache.xml"/>
     </bean>
     
 	<!--================================================== 配置会话管理 begin ==================================================-->
@@ -136,7 +139,7 @@
         <property name="loginUrl" value="/login"/>
     </bean>
 	<!-- 用户自定义过滤器 -->
-    <bean id="userFilter" class="com.paulandcode.shiro.filter.UserFilter"/>
+    <bean id="userFilter" class="com.paulandcode.shiro.web.filter.UserFilter"/>
 	<!-- Shiro过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <!-- Shiro的核心安全接口,这个属性是必须的 -->

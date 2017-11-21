@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.paulandcode.entity.UserEntity;
 
 /**
+ * 密码加密工具类
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:33:49
  */

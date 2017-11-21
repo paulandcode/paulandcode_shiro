@@ -14,6 +14,8 @@ import com.paulandcode.service.ResourceService;
 import com.paulandcode.service.RoleService;
 
 /**
+ * 角色
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:45:46
  */
@@ -69,11 +71,11 @@ public class RoleServiceImpl implements RoleService {
 			RoleEntity role = queryObject(roleId);
 			if (role != null) {
 				String resourceIdStrings = role.getResourceIds();
-				if(StringUtils.isBlank(resourceIdStrings)) {
+				if (StringUtils.isBlank(resourceIdStrings)) {
 					continue;
 				}
 				String[] resourceIdStringss = resourceIdStrings.split(",");
-				for(String resourceIdString : resourceIdStringss) {
+				for (String resourceIdString : resourceIdStringss) {
 					resourceIds.add(Long.valueOf(resourceIdString));
 				}
 			}

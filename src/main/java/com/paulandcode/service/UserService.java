@@ -6,6 +6,8 @@ import java.util.Set;
 import com.paulandcode.entity.UserEntity;
 
 /**
+ * 用户
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:36:35
  */
@@ -13,6 +15,7 @@ public interface UserService {
 
 	/**
 	 * 创建用户
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -20,6 +23,7 @@ public interface UserService {
 
 	/**
 	 * 根据用户更新用户
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -27,6 +31,7 @@ public interface UserService {
 
 	/**
 	 * 根据用户ID删除用户
+	 * 
 	 * @param userId
 	 */
 	void delete(Long userId);
@@ -41,6 +46,7 @@ public interface UserService {
 
 	/**
 	 * 根据用户ID查找用户
+	 * 
 	 * @param userId
 	 * @return
 	 */
@@ -48,6 +54,7 @@ public interface UserService {
 
 	/**
 	 * 查找所有用户
+	 * 
 	 * @return
 	 */
 	List<UserEntity> queryList();

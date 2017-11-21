@@ -6,6 +6,8 @@ import com.paulandcode.entity.ResourceEntity;
 import com.paulandcode.utils.Query;
 
 /**
+ * 资源
+ * 
  * @author 黄建峰
  * @date 2017年10月18日 上午10:40:49
  */
