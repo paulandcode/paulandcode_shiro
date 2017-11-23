@@ -101,13 +101,8 @@
 	<!--================================================== Maven依赖 begin ==================================================-->
 	<dependencies>
 	
-		<!--================================================== kaptcha ==================================================-->
-		<dependency>
-			<groupId>com.github.axet</groupId>
-			<artifactId>kaptcha</artifactId>
-			<version>${kaptcha-version}</version>
-		</dependency>
-	
+		<!-- Maven各个依赖包版本加载机制:例:a包依赖2.0版本的c包,b包依赖3.0版本的c包,如果a包写在前面,则c包版本为2.0,反之则为3.0 -->
+		<!-- 由于好多包都依赖spring包,所以,spring的各个包一般写在最前面 -->
 		<!--================================================== spring begin ==================================================-->
 	  	<dependency>
 	  		<groupId>org.springframework</groupId>
@@ -321,6 +316,13 @@
 			<version>${jstl-version}</version>
 		</dependency>
 		<!--================================================== jsp end ==================================================-->
+		
+		<!--================================================== kaptcha ==================================================-->
+		<dependency>
+			<groupId>com.github.axet</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>${kaptcha-version}</version>
+		</dependency>
 		
 	</dependencies>
 	<!--================================================== Maven依赖 end ==================================================-->
